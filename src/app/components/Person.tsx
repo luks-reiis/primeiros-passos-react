@@ -2,35 +2,30 @@ const getWeekDay = () =>{
     return new Intl.DateTimeFormat('pt-BR', {weekday: 'long'}).format(new Date());
 }
 
-export const Person = () => {
-    const data = {
-        name: 'Elon Musk',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8oc4v5ZVUrnzyc94DOr-V4YvzEHHYLayoYgDPaDCOhPycTWxOi8xHbNobNpWNW-2VHAM',
-        roles: ['CEO da Tesla', 'CEO da SpaceX']
-    }
+type Props ={
+    name: string;
+    avatar: string;
+    roles: string[];
+    address?: string
+}
 
-
-
-
+export const Person = ({name, avatar, roles}: Props) => {
     return(
-        <>
-            <h1 
-            style={{
-                color: 'red', 
-                fontSize: '30px'
-            }}>
-                {data.name} - {getWeekDay()}
-            </h1>
-            <img 
-            src={data.avatar} 
-            alt={data.name}
-            className = "w-40"
-
-            />
-            <ul>
-                <li>{data.roles[0]}</li>
-                <li>{data.roles[1]}</li>
-            </ul>
-        </>
+        
+            <div className="p-3">
+                <h1>
+                    {name}
+                </h1>
+                <img
+                src={avatar}
+                alt={name}
+                className="w-40"
+                />
+                <ul>
+                    <li>{roles[0]}</li>
+                    <li>{roles[1]}</li>
+                </ul>
+            </div>
+        
     );
 }
