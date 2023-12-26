@@ -10,9 +10,11 @@ export const EmojiRating = ( {rate}: Props ) => {
         rate = 0;
     }
 
+    const emojis = ['', '😫', '😔', '😐', '🙂', '😆'] 
+
     const rateInt = Math.floor(rate);
 
-    const stars = '⭐'.repeat(rateInt) + '★'.repeat(5-rateInt)
+    const stars = `${emojis[rateInt]}`.repeat(rateInt) + '😶'.repeat(5-rateInt)
 
 
     return(
