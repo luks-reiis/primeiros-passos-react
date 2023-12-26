@@ -1,15 +1,16 @@
-    import { StudentTable } from "./components/StudentTable";
-    import { students } from "./data/students";
+"use client"
 
-    function Page(){
-      return (
-      <div className="container mx-auto pt-5 pb-5">
-        <h1 className="text-5xl mb-5" >Lista de Estudantes</h1>
-        <StudentTable 
-          students = {students}
-        />
-      </div>
-      );
-    }
+function Page(){
+  function handleClick(){
+    alert("Funcionou");
+  }
 
-    export default Page;
+
+  return (
+  <div className="w-screen h-screen flex justify-center items-center">
+    <button onClick={handleClick} className="p-3 bg-blue-700 text-white rounded-md">Clique aqui</button>
+  </div>
+  );
+}
+
+export default Page;
