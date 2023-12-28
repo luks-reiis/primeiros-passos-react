@@ -4,26 +4,20 @@ import { useState } from "react";
 
 function Page(){
 
-  const [nameInput, setNameInput] = useState('');
+  const [count, setCount] = useState(0);
 
   const handleBtnClick = () => {
 
-    alert(nameInput)
+    setCount(count + 2);
+    alert(count);
 
   }
 
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center text-3xl">
-      <input 
-        className="border border-black p-3 text-xl text-black rounded" 
-        type="text" 
-        placeholder="Digite seu nome"
-        value={nameInput}
-        onChange={e => setNameInput(e.target.value)}
-      />
-      <p>Seu nome é: {nameInput}</p>
-      <button onClick={handleBtnClick}>Mostrar valor do campo</button>
+      <p>{count}</p>
+      <button onClick={handleBtnClick} className="bg-blue-700 p-3 rounded-md">+2</button>
     </div>
     );
 }
