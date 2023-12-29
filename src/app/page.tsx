@@ -6,7 +6,7 @@ import { TodoItem } from "./types/TodoItem";
 function Page(){
   const [itemInput, setItemInput] = useState('');
   const [list, setList] = useState<TodoItem[]>([
-    { label: 'Fazer dever de casa', checked: false },
+    { label: 'Fazer dever de casa', checked: true },
     { label: 'Comprar o bolo', checked: false }
   ]);
 
@@ -22,6 +22,18 @@ function Page(){
 
   const deleteItem = (index: number) => {
     setList(list.filter((item, key) => key !== index));
+  }
+
+  const toggleItem = (index: number) => {
+    let newList = [...list];
+    for(let i in newList) {
+      if(index === parseInt(i)){
+        newList[i].checked = !newList[i].checked;
+      }
+    }
+
+    setList(newList);
+
   }
 
 
@@ -44,7 +56,9 @@ function Page(){
 
       <ul className="w-full max-w-lg list-disc pl-5">
         {list.map((item, index) => (
-        <li key={index}>{item.label} - <button onClick={ () => deleteItem(index) } className="hover:underline">[ deletar ]</button></li>
+        <li key={index}>
+          <input onClick={ () => toggleItem(index) } type="checkbox" checked={item.checked} className="w-6 h-6 mr-3"/>
+          {item.label} - <button onClick={ () => deleteItem(index) } className="hover:underline">[ deletar ]</button></li>
         ))}
       </ul>
     </div>
