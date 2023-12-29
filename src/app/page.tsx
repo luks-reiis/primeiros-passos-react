@@ -1,35 +1,35 @@
 "use client"
 
 import { useState } from "react";
-import { Person } from "./types/Person";
+import { TodoItem } from "./types/TodoItem";
 
 function Page(){
-  const [fullName, setFullName] = useState<Person>({name: 'Lucas', lastName: 'Reis'});
 
-  const handleClearBtn = () => {
-    setFullName({name: '', lastName: ''})
-  }
+  const [list, setList] = useState<TodoItem[]>([
+    { label: 'Fazer dever de casa', checked: false },
+    { label: 'Comprar o bolo', checked: false }
+  ]);
+
+
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center text-3xl">
-      <input 
-        type="text"
-        placeholder="Nome"
-        className="border border-black p-3 text-2xl text-black rounded-md mb-3"
-        value={fullName.name} 
-        onChange={e => setFullName({ ...fullName, name: e.target.value })}
-      />
-      <input 
-        type="text"
-        placeholder="Sobrenome"
-        className="border border-black p-3 text-2xl text-black rounded-md mb-3"
-        value={fullName.lastName} 
-        onChange={e => setFullName({ ...fullName, lastName: e.target.value})} 
-      />
-      <p>Meu nome completo é:</p>
-      <p>{fullName.name} {fullName.lastName}</p>
+    <div className="w-screen h-screen flex flex-col items-center text-2xl">
+      <h1 className="text-4xl mt-5">Lista de Tarefas</h1>
 
-      <button onClick={handleClearBtn}>Limpar nome</button>
+      <div className="flex w-full max-w-lg my-3 p-4 rounded-md bg-gray-700 border-2 border-gray-800">
+        <input 
+          type="text"
+          placeholder="O que deseja fazer?"
+          className="flex-1 border border-black p-3 text-2xl text-black rounded-md mr-3" 
+        />
+        <button>Adicionar</button>
+      </div>
+
+      <ul className="w-full max-w-lg list-disc pl-5">
+        {list.map(item => (
+        <li>{item.label} - <button className="hover:underline">[ deletar ]</button></li>
+        ))}
+      </ul>
     </div>
     );
 }
