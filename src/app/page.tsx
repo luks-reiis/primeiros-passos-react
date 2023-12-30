@@ -1,66 +1,50 @@
 "use client"
 
-import { useState } from "react";
-import { TodoItem } from "./types/TodoItem";
+import { use, useState } from "react";
+import { PhotoItem } from "./components/PhotoItem";
+import { photoList } from "./data/photoList";
+import { Modal } from "./components/Modal";
 
 function Page(){
-  const [itemInput, setItemInput] = useState('');
-  const [list, setList] = useState<TodoItem[]>([
-    { label: 'Fazer dever de casa', checked: true },
-    { label: 'Comprar o bolo', checked: false }
-  ]);
 
-  const handleAddButton = () => {
-    if(itemInput.trim() === '') return;
+  const [showModal, setShowModal] = useState(false);
 
-    setList([
-      ...list,
-      { label: itemInput, checked: false } 
-    ]);
-    setItemInput('');
-  }
+  const [imageOfModal, setImageOfModal] = useState('');
 
-  const deleteItem = (index: number) => {
-    setList(list.filter((item, key) => key !== index));
-  }
+  const openModal = (id: number) => {
+    const photo = photoList.find(item => item.id === id);
 
-  const toggleItem = (index: number) => {
-    let newList = [...list];
-    for(let i in newList) {
-      if(index === parseInt(i)){
-        newList[i].checked = !newList[i].checked;
-      }
+    if(photo){
+      setImageOfModal(photo.url);
+      setShowModal(true);
     }
-
-    setList(newList);
-
   }
 
-
+  const closeModal = () => {
+    setShowModal(false);
+  }
+  
   return (
-    <div className="w-screen h-screen flex flex-col items-center text-2xl">
-      <h1 className="text-4xl mt-5">Lista de Tarefas</h1>
+    <div className="mx-2">
+      <h1 className="text-center text-3xl font-bold my-10">Fotos Intergalacticas</h1>
 
-      <div className="flex w-full max-w-lg my-3 p-4 rounded-md bg-gray-700 border-2 border-gray-800">
-        <input 
-          type="text"
-          placeholder="O que deseja fazer?"
-          className="flex-1 border border-black p-3 text-2xl text-black rounded-md mr-3" 
-          value={itemInput}
-          onChange={e => setItemInput(e.target.value)}
-        />
-        <button onClick={handleAddButton}>Adicionar</button>
-      </div>
-
-      <p className="my-4">{list.length} itens na lista</p>
-
-      <ul className="w-full max-w-lg list-disc pl-5">
-        {list.map((item, index) => (
-        <li key={index}>
-          <input onClick={ () => toggleItem(index) } type="checkbox" checked={item.checked} className="w-6 h-6 mr-3"/>
-          {item.label} - <button onClick={ () => deleteItem(index) } className="hover:underline">[ deletar ]</button></li>
+      <section className="container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {photoList.map(item => (
+          <PhotoItem
+            key={item.id}
+            photo={item}
+            onClick={() => openModal(item.id)}
+          />
         ))}
-      </ul>
+      </section>
+
+      {showModal &&
+        <Modal
+          image={imageOfModal}
+          closeModal = {closeModal}
+        />
+      
+      }
     </div>
     );
 }
