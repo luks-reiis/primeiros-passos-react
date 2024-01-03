@@ -1,65 +1,51 @@
 "use client"
 
-import { use, useState } from "react";
-import { questions } from "./data/questions";
-import { QuestionItem } from "./components/QuestionItem";
-import { Results } from "./components/Results";
+/*
+
+  Etapas do Effect:
+
+  1. Definição da função que vai rodar.
+  2. Definição de QUANDO vai rodar.
+  3. Definição do que fazer quando o componente sumir/unload.
+
+  Effect é utilizado quando existe integração com serviço externo.
+
+  Exemplo de baixa performance:
+
+  function Page(){
+    const [firstName, setFirstName] = useState("Lucão");
+    const [lastName, setLastName] = useState("Reiis");
+    const [fullName, setFullName] = useState('');
+
+    useEffect(() => {
+      setFullName(firstName + ' ' + lastName);
+    }, [firstName, lastName]);
+
+    return (
+      <div className="">
+      <p>Meu nome é {fullName}</p>
+
+      <button className="border border-blue-400 m-3 p-3" onClick={() => setFirstName('Joe')}>Mudar primeiro nome</button>
+      <button className="border border-blue-400 m-3 p-3" onClick={() => setLastName('Mac')}>Mudar último nome</button>
+      </div>
+      );
+  }
+*/
+
+import { useEffect, useState } from "react";
 
 function Page(){
-  const [answers, setAnswers] = useState<number[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [showResult, setShowResult] = useState(false);
-  const title = 'Quiz de Culinária';
-
-  const loadNextQuestion = () => {
-    if(questions[currentQuestion + 1]){
-      setCurrentQuestion(currentQuestion + 1);
-    }else{
-      setShowResult(true);
-    }
-  }
-
-  const handleAnswered = (answer: number) => {
-    setAnswers([ ...answers, answer ]);
-
-    loadNextQuestion();
-  }
-
-  const handleRestarButton = () => {
-    setAnswers([]);
-    setCurrentQuestion(0);
-    setShowResult(false);
-  }
+  const [firstName, setFirstName] = useState("Lucão");
+  const [lastName, setLastName] = useState("Reiis");
   
-  return (
-    <div className="w-full h-screen flex justify-center items-center bg-blue-600">
-      <div className="w-full max-w-lg rounded-md bg-white text-black shadow shadow-black">
-        <div className="p-5 font-bold text-2xl">{title}</div>
-        <div className="p-5">
-          {!showResult &&
-            <QuestionItem
-              question={questions[currentQuestion]}
-              count={currentQuestion + 1}
-              onAnswer={handleAnswered}
-            />
-          }
-          {showResult &&
-            <Results 
-              questions={questions}
-              answers = {answers}
-            />
-          }
-        </div>
-        <div className="p-5 text-center border-t border-gray-300">
-          {!showResult &&
-            `${currentQuestion + 1} de ${questions.length} pergunta${questions.length === 1 ? "" : "s"}`
-          }
+  const fullName = firstName + ' ' + lastName;
 
-          {showResult &&
-            <button className="px-3 py-2 rounded-md bg-blue-800 text-white" onClick={handleRestarButton}>Reiniciar Quiz</button>
-          }
-        </div>
-      </div>
+  return (
+    <div className="">
+     <p>Meu nome é {fullName}</p>
+     <hr />
+     <button className="border border-blue-400 m-3 p-3" onClick={() => setFirstName('Joe')}>Mudar primeiro nome</button>
+     <button className="border border-blue-400 m-3 p-3" onClick={() => setLastName('Mac')}>Mudar último nome</button>
     </div>
     );
 }
