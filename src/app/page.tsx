@@ -1,51 +1,23 @@
 "use client"
 
-/*
-
-  Etapas do Effect:
-
-  1. Definição da função que vai rodar.
-  2. Definição de QUANDO vai rodar.
-  3. Definição do que fazer quando o componente sumir/unload.
-
-  Effect é utilizado quando existe integração com serviço externo.
-
-  Exemplo de baixa performance:
-
-  function Page(){
-    const [firstName, setFirstName] = useState("Lucão");
-    const [lastName, setLastName] = useState("Reiis");
-    const [fullName, setFullName] = useState('');
-
-    useEffect(() => {
-      setFullName(firstName + ' ' + lastName);
-    }, [firstName, lastName]);
-
-    return (
-      <div className="">
-      <p>Meu nome é {fullName}</p>
-
-      <button className="border border-blue-400 m-3 p-3" onClick={() => setFirstName('Joe')}>Mudar primeiro nome</button>
-      <button className="border border-blue-400 m-3 p-3" onClick={() => setLastName('Mac')}>Mudar último nome</button>
-      </div>
-      );
-  }
-*/
-
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { VideoPlayer } from "./components/VideoPlayer";
 
 function Page(){
-  const [firstName, setFirstName] = useState("Lucão");
-  const [lastName, setLastName] = useState("Reiis");
-  
-  const fullName = firstName + ' ' + lastName;
+
+  const[playing, setPlaying] = useState(false);
 
   return (
     <div className="">
-     <p>Meu nome é {fullName}</p>
-     <hr />
-     <button className="border border-blue-400 m-3 p-3" onClick={() => setFirstName('Joe')}>Mudar primeiro nome</button>
-     <button className="border border-blue-400 m-3 p-3" onClick={() => setLastName('Mac')}>Mudar último nome</button>
+      <div className="border border-white p-3 mb-4">
+        <p className="text-2xl text-blue-400 mb-3">{playing ? 'Rodando' : 'Pausado'}</p>
+        <button className="bg-blue-400 rounded-md p-3 text-black" onClick={() => setPlaying(!playing)}>Play/Pause</button>
+      </div>
+
+      <VideoPlayer
+        src="/assets/videoTeste.mp4"
+        isPlaying={playing}
+      />
     </div>
     );
 }
