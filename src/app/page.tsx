@@ -1,51 +1,27 @@
 "use client"
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useReducer, useState } from "react";
 import { Item } from "./types/Item";
+import { listReducer } from "@/reducers/listReducer";
 
 function Page(){
 
-  const [list, setList] = useState<Item[]>([]);
+  const [list, dispatch] = useReducer(listReducer, [])
 
-  const addNewItem = (text: string) => {
-    setList([ ...list, {
-      id: list.length, 
-      text, 
-      done:false
-    }])
-  }
-
-  const editItemText = (id: number, newText: string) => {
-    setList(
-      list.map(t => {
-        if(t.id === id){
-          t.text = newText;
-        }
-        return t;
-      })
-    )
-  }
-
-  const toggleItem = (id: number) => {
-    setList(
-      list.map(t => {
-        if(t.id === id){
-          t.done = !t.done;
-        }
-        return t;
-      })
-    )
-  }
-
-  const removeItem = (id: number) => {
-    setList(list.filter(t => t.id !== id));
+  const handleAddClick = () => {
+    dispatch({
+      type: 'add',
+      payload: {
+        text: 'Novo item'
+      }
+    });
   }
 
   return (
     <div className="">
-
+      <button onClick={handleAddClick}></button>
     </div>
-    );erfdwefcwerd
+    );
 }
 
 export default Page;
