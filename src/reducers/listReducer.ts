@@ -29,7 +29,7 @@ export const listReducer = (list: Item[], action: ListActions) => {
     switch(action.type){
         case 'add':
             return [ ...list, {
-                id: list.length, 
+                id: list.length ? (list[list.length - 1].id + 1) : 1, 
                 text: action.payload.text, 
                 done:false
                 }]
