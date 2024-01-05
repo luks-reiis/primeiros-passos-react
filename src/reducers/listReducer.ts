@@ -52,7 +52,4 @@ export const listReducer = (list: Item[], action: ListActions) => {
         default:
             return list;
     }
-
-
-    return list
 }
